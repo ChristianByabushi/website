@@ -1,0 +1,149 @@
+{
+  "name": "Christian Byabushi",
+  "contact": {
+    "email1": "cbyabush@andrew.cmu.edu",
+    "email2": "murhchristian@gmail.com",
+    "phone": "+250 795 599 839",
+    "linkedin": "https://linkedin.com",
+    "github": "https://github.com"
+  },
+  "profile": "Graduate student in Information Technology at Carnegie Mellon University with a strong foundation in Deep Learning and Applied Mathematics. Experienced in designing and implementing advanced neural architectures, including ResNet-18 style Convolutional Neural Networks, Graph Attention Networks, and LSTM. Exploring the intersection of artificial and biological neural systems, leveraging neuroimaging modalities — MEG, EEG, and fMRI — to capture neural responses to carefully calibrated stimuli across a representative set of African languages, with the goal of advancing research on decoding language from human brain activity.",
+  "education": [
+    {
+      "degree": "Master of Science in Information Technology",
+      "institution": "Carnegie Mellon University Africa",
+      "location": "Kigali, Rwanda",
+      "date": "Aug 2025 – May 2027",
+      "courses": ["Deep Learning", "Code Optimization", "Natural Language Processing", "Mathematics"]
+    },
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "Catholic University of Bukavu",
+      "location": "Bukavu, DR Congo",
+      "date": "Sep 2018 – Sep 2023",
+      "courses": ["Neural Networks", "Probability Theory", "Linear Algebra", "Data Analytics Programming"]
+    }
+  ],
+  "experience": [
+    {
+      "title": "Research and Teaching Assistant",
+      "org": "",
+      "location": "",
+      "date": "Jan 2025 – Present",
+      "bullets": [
+        "Piloting ongoing research on \"Empowering African Women's Health with GenAI in Southern Regions of DR Congo.\"",
+        "Conducted ML research on a spam detection model for major telecom networks (Vodafone, Airtel, Orange) in Swahili, Lingala, and Congolese French."
+      ]
+    },
+    {
+      "title": "Python Developer",
+      "org": "REI Conveyor Belt",
+      "location": "Remote, United States",
+      "date": "Aug 2024 – Sep 2024",
+      "bullets": [
+        "Developed scripts to web scrape data on foreclosures and taxes across USA counties, automating weekly downloads and AWS storage of ~15 foreclosures from King County.",
+        "Debugged code and conducted daily analysis on new counties and ethical data extraction techniques."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Neural Machine Translation: GAT with BiRNN Bridge vs. Fine-Tuned NLLB-200",
+      "description": "Investigated two distinct approaches for machine translation between Mashi — an under-resourced Bantu language spoken in eastern DR Congo — and English, leveraging NLP techniques.",
+      "link": "https://github.com/ChristianByabushi/data-applied-machine-learning/",
+      "linkLabel": "Project link",
+      "image": "./images/nlp_mashi.png"
+    },
+    
+    
+    
+    {
+      "title": "Speech recognition model",
+      "description": "Developed a Listen-Attend-Spell (LAS) style end-to-end ASR system (~14.5M parameters) in PyTorch, with a 3-layer CNN front-end for local feature extraction and Pyramidal BiLSTMs with residual connections to optimize temporal downsampling. Optimized the model using CTC Loss, SpecAugment, and mixed-precision training, achieving efficient convergence via an AdamW optimizer and a Levenshtein-based learning rate scheduler. ",
+      "link": "https://www.kaggle.com/code/cbyabush/speech-recognition-with-nn",
+      "linkLabel": "Project link",
+      "image": ""
+
+    },
+    
+
+    {
+      "title": "Face Recognition & Verification",
+      "description": "Built a ResNet-18-style CNN (≤30M parameters) in PyTorch to classify faces across 8,631 identities, then repurposed it as a feature extractor for face verification via cosine similarity on 512-dim embeddings. Trained with SGD + Nesterov momentum, label smoothing, and AMP mixed precision on the CMU Kaggle dataset.",
+      "link": "#",
+      "linkLabel": "Project →",
+      "image": "https://picsum.photos/seed/face/740/260"
+    },
+    {
+      "title": "Deep MLP Architecture & Training",
+      "description": "Designed a diamond-shaped deep MLP (≈17.8M parameters) with residual connections, batch normalization, dropout, and mixed GELU/ReLU activations. Trained using AdamW with label smoothing, ReduceLROnPlateau scheduling, and AMP for efficient convergence.",
+      "link": "#",
+      "linkLabel": "Project →",
+      "image": "https://picsum.photos/seed/mlp/740/260"
+    },
+    {
+      "title": "Financial Analysis of DJIA Stocks with PCA, Clustering & Time Series Forecasting",
+      "description": "Applied PCA on 3 years of log returns for all 30 DJIA constituents to decompose market variance. Built and compared ARIMA, SARIMA, and LSTM models to forecast Procter & Gamble monthly prices, evaluating stationarity via ADF tests and decomposing seasonality with STL.",
+      "link": "#",
+      "linkLabel": "Project →",
+      "image": "https://picsum.photos/seed/djia/740/260"
+    }
+  ],
+  "skills": [
+    { "label": "Languages", "items": "Python, R, C++, Java, HTML, CSS, SQL" },
+    { "label": "Deep Learning", "items": "PyTorch, CNN design, ResNet architectures, MLPs, residual connections, batch normalization, AMP mixed precision, Kaiming/Xavier initialization" },
+    { "label": "ML & Data Science", "items": "Scikit-learn, PCA, XGBoost, LightGBM, CatBoost, Optuna, SHAP, hierarchical clustering, ARIMA, SARIMA, LSTM, Transformers" },
+    { "label": "Data Libraries", "items": "NumPy, Pandas, Matplotlib, Seaborn, statsmodels" },
+    { "label": "Visualization & BI", "items": "Tableau, Power BI, Excel" },
+    { "label": "Training Techniques", "items": "AdamW, SGD + Nesterov, Dropout, ReduceLROnPlateau, Cross Entropy, Label Smoothing, AMP/GradScaler" },
+    { "label": "Platforms", "items": "Git, Google Colab, Kaggle, PSC Bridges2 (HPC), WandB" }
+  ],
+  "awards": [
+    "Mastercard Foundation Scholar — Masters Degree at CMU-Africa (2025–2027)",
+    "2nd Team Winner — SIGCOMM Hackathon at Carnegie Mellon University (September 2025)",
+    "Vodacom National Scholar — 5-year scholarship, one of 50 elite students out of 50,000 in DR Congo",
+    "Health Project Certification — Heart Disease classification model using the UCI Machine Learning Repository"
+  ],
+  "volunteering": [
+    {
+      "title": "Mentor — Africa Digital ID Hackathon 2026 (CMU Pan-African Initiative)",
+      "date": "Feb 2026 – Present",
+      "bullets": [
+        "Mentoring 5+ multidisciplinary university teams across Africa in designing and prototyping locally contextualized digital ID solutions in healthcare, education, and public service delivery."
+      ]
+    },
+    {
+      "title": "Vodacom Ambassador – Scholar",
+      "date": "Sep 2018 – Present",
+      "bullets": [
+        "Guided prospective applicants through the scholarship process, serving as a liaison with the Vodacom scholarship programme.",
+        "Mentored newly selected scholars during their transition to university life through orientation sessions and continuous advisory support."
+      ]
+    }
+  ],
+  "certifications": [
+    "Data Analysis", "Data Science", "Data Analysis in Python", "JavaScript", "SQL",
+    "Master Excel", "Cisco Cybersecurity with Cloud Computing", "Google IT Support",
+    "GDPR", "LoRa IoT Certification"
+  ],
+  "languages": [
+    { "lang": "English", "level": "Fluent" },
+    { "lang": "French", "level": "Fluent" },
+    { "lang": "Swahili", "level": "Fluent" },
+    { "lang": "Kinyarwanda", "level": "Basic" }
+  ],
+  "references": [
+    {
+      "name": "Xaq Pitkow, Ph.D.",
+      "title": "Associate Professor, Neuroscience Institute, Carnegie Mellon University, Pittsburgh",
+      "email": "xpitkow@andrew.cmu.edu",
+      "address": "Baker Hall 335, 4909 Frew St, Pittsburgh, PA 15213"
+    },
+    {
+      "name": "Georges Okeyo, Ph.D.",
+      "title": "Associate Teaching Professor and Director of Academics, Carnegie Mellon University Africa",
+      "email": "gokeyo@andrew.cmu.edu",
+      "address": "D102 Regional ICT Center of Excellence Bldg"
+    }
+  ]
+}

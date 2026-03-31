@@ -1,0 +1,788 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Murhula Byabushi Christian</title>
+  <link rel="icon" type="image/png" href="images/profile_picture.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0e0b1a;           /* deep dark purple-black base */
+      --panel:    #13102299;         /* semi-transparent deep purple panel */
+      --border:   #2d1f5e;           /* purple-tinted border */
+      --purple:   #5D3FD3;           /* Deep Purple — primary accent */
+      --purple-dim:#3d2a8a;          /* darker purple for subtle elements */
+      --coral:    #FF6F61;           /* Bright Coral — secondary accent */
+      --coral-dim:#cc5a4e;           /* dimmed coral */
+      --yellow:   #e8e8e8;           /* replaced yellow → light gray/white */
+      --teal:     #008080;           /* Teal — links & borders */
+      --teal-bright: #00b3b3;        /* brighter teal for hover/active */
+      --text:     #e8e0f5;           /* soft lavender-white text */
+      --muted:    #6b5fa0;           /* muted purple */
+      --muted2:   #8878b8;           /* lighter muted purple */
+      --font:     'Courier New', Courier, monospace;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── Neural canvas ── */
+    #neural-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #wrap { position: relative; z-index: 1; }
+
+    a { color: var(--teal-bright); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--coral); }
+
+    /* ── Layout ── */
+    #wrap {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 16px 80px;
+    }
+
+    /* ── Hero card ── */
+    #hero {
+      border: 1px solid var(--purple);
+      background: #131022ee;
+      padding: 24px;
+      margin-bottom: 0;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    #hero-name {
+      grid-column: 1 / -1;
+      color: var(--yellow);
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      border: 1px solid var(--purple);
+      display: inline-block;
+      padding: 2px 10px;
+      margin-bottom: 16px;
+    }
+
+    #avatar {
+      width: 140px;
+      height: 170px;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--border);
+      display: block;
+      image-rendering: high-quality;
+      /* no filter, no opacity — full clarity */
+    }
+
+    #avatar-placeholder {
+      width: 140px;
+      height: 160px;
+      border: 1px solid var(--border);
+      background: #1a1030;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 8px;
+    }
+
+    #bio { font-size: 0.88rem; color: var(--text); }
+    #bio p { margin-bottom: 10px; }
+
+    /* ── Hero actions ── */
+    #hero-actions {
+      grid-column: 2 / -1;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn {
+      border: 1px solid var(--purple);
+      color: var(--purple);
+      background: transparent;
+      padding: 4px 14px;
+      font-family: var(--font);
+      font-size: 0.78rem;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn:hover { background: var(--purple); color: #fff; text-decoration: none; }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      background: transparent;
+      padding: 4px 10px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { border-color: var(--teal-bright); color: var(--teal-bright); text-decoration: none; }
+
+    /* ── Link counter badge ── */
+    #link-count {
+      display: inline-block;
+      border: 1px solid var(--teal);
+      color: var(--teal-bright);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      letter-spacing: 0.06em;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ── Tabs ── */
+    #tabs {
+      display: flex;
+      border: 1px solid var(--border);
+      border-top: none;
+      background: #0e0b1acc;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px 0;
+      text-align: center;
+      font-family: var(--font);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-right: 1px solid var(--border);
+      transition: color 0.15s, background 0.15s;
+    }
+    .tab:last-child { border-right: none; }
+    .tab:hover { color: var(--teal-bright); }
+    .tab.active { background: var(--purple); color: #fff; font-weight: bold; }
+
+    /* ── Content panel ── */
+    #content {
+      border: 1px solid var(--border);
+      border-top: none;
+      background: #131022ee;
+      padding: 32px 28px;
+      min-height: 400px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #content.visible { opacity: 1; }
+
+    /* ── Section heading ── */
+    .sec-title {
+      color: var(--coral);
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+      margin-top: 36px;
+    }
+    .sec-title:first-child { margin-top: 0; }
+    .sec-title::before { content: ':: '; }
+
+    /* ── Entry ── */
+    .entry { margin-bottom: 28px; }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .entry-title { color: var(--yellow); font-size: 0.88rem; }
+    .entry-date  { color: var(--muted2); font-size: 0.82rem; }
+    .entry-org   { color: var(--muted2); font-size: 0.82rem; margin-bottom: 6px; }
+
+    .entry ul { padding-left: 0; list-style: none; }
+    .entry ul li { padding-left: 0; margin-bottom: 4px; font-size: 0.85rem; color: var(--text); }
+    .entry ul li::before { content: '> '; color: var(--teal); }
+
+    /* ── Project card ── */
+    .project { margin-bottom: 36px; border: 1px solid var(--border); background: #131022ee; }
+
+    .project-img-wrap { width: 100%; height: 180px; overflow: hidden; background: #1a1030; }
+    .project-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .project:hover .project-img-wrap img { transform: scale(1.04); }
+
+    .project-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.78rem;
+    }
+
+    .project-body { padding: 16px 18px; }
+    .project-title { color: var(--yellow); font-size: 0.88rem; display: block; margin-bottom: 6px; }
+    .project-desc  { font-size: 0.83rem; color: var(--text); margin-bottom: 10px; }
+    .project-link  { font-size: 0.78rem; color: var(--teal-bright); }
+    .project-link.soon { color: var(--muted); }
+
+    /* ── Skills ── */
+    .skill-row { margin-bottom: 8px; font-size: 0.84rem; }
+    .skill-label { color: var(--coral); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .tag {
+      border: 1px solid var(--purple-dim);
+      color: var(--muted2);
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Awards ── */
+    .award-item { margin-bottom: 6px; font-size: 0.85rem; }
+    .award-item::before { content: '> '; color: var(--teal); }
+
+    /* ── References ── */
+    .ref { margin-bottom: 20px; font-size: 0.84rem; border-left: 2px solid var(--purple); padding-left: 12px; }
+    .ref-name { color: var(--coral); }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  </style>
+</head>
+<body>
+<canvas id="neural-bg"></canvas>
+<div id="wrap">
+  <div id="hero">
+    <div id="hero-name"></div>
+    <div id="hero-avatar"></div>
+    <div>
+      <div id="bio"></div>
+      <div id="hero-actions"></div>
+    </div>
+  </div>
+
+  <div id="tabs"></div>
+  <div id="content"></div>
+</div>
+
+<script>
+
+// ── Data ─────────────────────────────────────────────────────────
+const data = {
+  name: "Christian Byabushi",
+  avatar: "./images/profile_picture.png",
+  contact: {
+    email1: "cbyabush@andrew.cmu.edu",
+    email2: "murhchristian@gmail.com",
+    phone: "+243 812995521",
+    linkedin: "https://www.linkedin.com/in/murhchristian/",
+    github: "https://github.com/ChristianByabushi"
+  },
+  profile: "Graduate student in Information Technology at Carnegie Mellon University Africa, Kigali. Strong foundation in Deep Learning and Applied Mathematics. Exploring the intersection of artificial and biological neural systems: leveraging MEG, EEG, and fMRI to decode language from human brain activity across African languages.",
+
+  tabs: {
+    Research: {
+      sections: [
+        {
+          title: "Current Research",
+          type: "entries",
+          items: [
+            {
+              title: "Research and Teaching Assistant",
+              org: "Carnegie Mellon University Africa",
+              date: "Jan 2025 – Present",
+              bullets: [
+                "Piloting research on \"Empowering African Women's Health with GenAI in Southern Regions of DR Congo.\"",
+                "ML research on spam detection for Vodafone, Airtel, Orange in Swahili, Lingala, and Congolese French."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Projects",
+          type: "projects"
+        }
+      ]
+    },
+    Academic: {
+      sections: [
+        {
+          title: "Education",
+          type: "entries",
+          items: [
+            {
+              title: "Master of Science in Information Technology",
+              org: "Carnegie Mellon University Africa — Kigali, Rwanda",
+              date: "Aug 2025 – May 2027",
+              bullets: ["Deep Learning", "Code Optimization", "Natural Language Processing", "Mathematics"]
+            },
+            {
+              title: "Bachelor of Science in Computer Science",
+              org: "Catholic University of Bukavu — Bukavu, DR Congo",
+              date: "Sep 2018 – Sep 2023",
+              bullets: ["Neural Networks", "Probability Theory", "Linear Algebra", "Data Analytics Programming"]
+            }
+          ]
+        },
+        {
+          title: "Awards & Achievements",
+          type: "awards",
+          items: [
+            "Mastercard Foundation Scholar — Masters Degree at CMU-Africa (2025–2027)",
+            "2nd Team Winner — SIGCOMM Hackathon at Carnegie Mellon University (September 2025)",
+            "Vodacom National Scholar — 5-year scholarship, one of 50 elite students out of 50,000 in DR Congo",
+            "Health Project Certification — Heart Disease classification model using the UCI ML Repository"
+          ]
+        },
+        {
+          title: "Certifications",
+          type: "tags",
+          items: ["Data Analysis","Data Science","Data Analysis in Python","JavaScript","SQL","Master Excel","Cisco Cybersecurity with Cloud Computing","Google IT Support","GDPR","LoRa IoT Certification"]
+        }
+      ]
+    },
+    Skills: {
+      sections: [
+        {
+          title: "Technical Skills",
+          type: "skills",
+          items: [
+            { label: "Languages",          value: "Python, R, C++, Java, HTML, CSS, SQL" },
+            { label: "Deep Learning",      value: "PyTorch, CNN, ResNet, MLPs, residual connections, batch norm, AMP, Kaiming/Xavier init" },
+            { label: "ML & Data Science",  value: "Scikit-learn, PCA, XGBoost, LightGBM, CatBoost, Optuna, SHAP, ARIMA, SARIMA, LSTM, Transformers" },
+            { label: "Data Libraries",     value: "NumPy, Pandas, Matplotlib, Seaborn, statsmodels" },
+            { label: "Visualization & BI", value: "Tableau, Power BI, Excel" },
+            { label: "Training",           value: "AdamW, SGD + Nesterov, Dropout, ReduceLROnPlateau, Label Smoothing, AMP/GradScaler" },
+            { label: "Platforms",          value: "Git, Google Colab, Kaggle, PSC Bridges2 (HPC), WandB" }
+          ]
+        },
+        {
+          title: "Languages",
+          type: "tags",
+          items: ["English — Fluent","French — Fluent","Swahili — Fluent","Kinyarwanda — Basic"]
+        }
+      ]
+    },
+    Other: {
+      sections: [
+        {
+          title: "Volunteering",
+          type: "entries",
+          items: [
+            {
+              title: "Mentor — Africa Digital ID Hackathon 2026",
+              org: "CMU Pan-African Initiative",
+              date: "Feb 2026 – Present",
+              bullets: ["Mentoring 5+ multidisciplinary teams across Africa in designing digital ID solutions for healthcare, education, and public service delivery."]
+            },
+            {
+              title: "Vodacom Ambassador – Scholar",
+              org: "Vodacom Scholarship Programme",
+              date: "Sep 2018 – Present",
+              bullets: [
+                "Guided prospective applicants through the scholarship process.",
+                "Mentored newly selected scholars during their transition to university life."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Professional Experience",
+          type: "entries",
+          items: [
+            {
+              title: "Python Developer",
+              org: "REI Conveyor Belt — Remote, United States",
+              date: "Aug 2024 – Sep 2024",
+              bullets: [
+                "Developed scripts to web scrape foreclosure and tax data across USA counties, automating weekly AWS storage of ~15 records from King County.",
+                "Debugged code and conducted daily analysis on new counties and ethical extraction techniques."
+              ]
+            }
+          ]
+        },
+        {
+          title: "References",
+          type: "refs",
+          items: [
+            { name: "Xaq Pitkow, Ph.D.", title: "Associate Professor, Neuroscience Institute, CMU Pittsburgh", email: "xpitkow@andrew.cmu.edu", address: "Baker Hall 335, 4909 Frew St, Pittsburgh, PA 15213" },
+            { name: "Georges Okeyo, Ph.D.", title: "Associate Teaching Professor & Director of Academics, CMU Africa", email: "gokeyo@andrew.cmu.edu", address: "D102 Regional ICT Center of Excellence Bldg" }
+          ]
+        }
+      ]
+    }
+  },
+
+  projects: [
+      {
+      "title": "Speech recognition model",
+      "description": "Developed a Listen-Attend-Spell (LAS) style end-to-end ASR system (~14.5M parameters) in PyTorch, with a 3-layer CNN front-end for local feature extraction and Pyramidal BiLSTMs with residual connections to optimize temporal downsampling. Optimized the model using CTC Loss, SpecAugment, and mixed-precision training, achieving efficient convergence via an AdamW optimizer and a Levenshtein-based learning rate scheduler. ",
+      "link": "https://www.kaggle.com/code/cbyabush/speech-recognition-with-nn",
+      "linkLabel": "Project →",
+      "image": "./images/audio_output.png"
+
+    },
+    {
+      title: "Face Recognition & Verification",
+      description: "ResNet-18-style CNN (≤30M params) in PyTorch for 8,631 identities. Feature extractor for verification via cosine similarity on 512-dim embeddings. SGD + Nesterov, AMP.",
+      link: "https://www.kaggle.com/code/cbyabush/hw2p2-slack-image-rec/", linkLabel: "Project →",
+      image: "./images/face_recognition.png"
+    },
+    {
+      title: "Neural Machine Translation: GAT + BiRNN vs. NLLB-200",
+      description: "Two approaches for Mashi–English translation — an under-resourced Bantu language from eastern DR Congo — using Graph Attention Networks and fine-tuned NLLB-200.",
+      link: "https://www.kaggle.com/code/victorolufemi/mashi-nllb", linkLabel: "Linked Data Conference (under review)",
+      image: "./images/mashi_ml.png"
+    },
+    {
+      title: "DJIA Financial Analysis — PCA, Clustering & Forecasting",
+      description: "PCA on 3 years of log returns for all 30 DJIA stocks. ARIMA, SARIMA, LSTM to forecast P&G monthly prices. ADF stationarity tests, STL decomposition.",
+      link: "#", linkLabel: "Project →",
+      image: "./images/clustered_heatmap.png"
+    },
+    {
+      title: "Deep MLP Architecture & Training",
+      description: "Diamond-shaped MLP (≈17.8M params) with residual connections, batch norm, dropout, GELU/ReLU. AdamW + ReduceLROnPlateau + AMP.",
+      link: "https://drive.google.com/file/d/1bFHrW1ytvZ-GDo6ck2lgw9tRL4TFsiqA/view?usp=sharing", linkLabel: "Project →",
+      image: "./images/frame_audio.png",
+
+    }
+    
+  ]
+};
+
+// ── Helpers ───────────────────────────────────────────────────────
+function h(tag, cls, ...kids) {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  kids.flat().forEach(k => {
+    if (k == null) return;
+    el.append(typeof k === 'string' ? document.createTextNode(k) : k);
+  });
+  return el;
+}
+
+function a(href, text, cls) {
+  const el = document.createElement('a');
+  el.href = href; el.textContent = text;
+  if (cls) el.className = cls;
+  if (href.startsWith('http')) { el.target = '_blank'; el.rel = 'noopener'; }
+  return el;
+}
+
+// ── Renderers ─────────────────────────────────────────────────────
+function renderEntry({ title, org, date, bullets }) {
+  const wrap = h('div', 'entry');
+  const hdr  = h('div', 'entry-header',
+    h('span', 'entry-title', title),
+    date ? h('span', 'entry-date', date) : null
+  );
+  wrap.append(hdr);
+  if (org) wrap.append(h('div', 'entry-org', org));
+  if (bullets?.length) {
+    const ul = h('ul', null);
+    bullets.forEach(b => ul.append(h('li', null, b)));
+    wrap.append(ul);
+  }
+  return wrap;
+}
+
+function renderProject({ title, description, link, linkLabel, image }) {
+  const card = h('div', 'project');
+  const imgWrap = h('div', 'project-img-wrap');
+  if (image) {
+    const img = document.createElement('img');
+    img.src = image; img.alt = title;
+    img.onerror = () => imgWrap.replaceChildren(h('div', 'project-img-placeholder', '[ no image ]'));
+    imgWrap.append(img);
+  } else {
+    imgWrap.append(h('div', 'project-img-placeholder', '[ no image ]'));
+  }
+  const isReal = link && link !== '#';
+  const body = h('div', 'project-body',
+    h('span', 'project-title', title),
+    h('p', 'project-desc', description),
+    isReal ? a(link, linkLabel || 'View →', 'project-link')
+           : h('span', 'project-link soon', 'link coming soon')
+  );
+  card.append(imgWrap, body);
+  return card;
+}
+
+function renderSection(sec, projects) {
+  const frag = document.createDocumentFragment();
+  frag.append(h('div', 'sec-title', sec.title));
+
+  if (sec.type === 'entries') {
+    sec.items.forEach(i => frag.append(renderEntry(i)));
+  } else if (sec.type === 'projects') {
+    projects.forEach(p => frag.append(renderProject(p)));
+  } else if (sec.type === 'awards') {
+    sec.items.forEach(i => {
+      const d = h('div', 'award-item', i);
+      frag.append(d);
+    });
+  } else if (sec.type === 'skills') {
+    sec.items.forEach(s => {
+      const row = h('div', 'skill-row');
+      row.append(h('span', 'skill-label', s.label + ': '), s.value);
+      frag.append(row);
+    });
+  } else if (sec.type === 'tags') {
+    const tags = h('div', 'tags');
+    sec.items.forEach(i => tags.append(h('span', 'tag', i)));
+    frag.append(tags);
+  } else if (sec.type === 'refs') {
+    sec.items.forEach(r => {
+      const div = h('div', 'ref');
+      div.append(h('div', 'ref-name', r.name));
+      div.append(h('div', null, r.title));
+      div.append(a(`mailto:${r.email}`, r.email));
+      div.append(document.createTextNode(' · ' + r.address));
+      frag.append(div);
+    });
+  }
+
+  frag.append(h('hr', 'divider'));
+  return frag;
+}
+
+// ── Tab switching ─────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.tab === name)
+  );
+  const content = document.getElementById('content');
+  content.classList.remove('visible');
+  content.innerHTML = '';
+  const tabData = data.tabs[name];
+  tabData.sections.forEach(sec => content.append(renderSection(sec, data.projects)));
+  requestAnimationFrame(() => content.classList.add('visible'));
+}
+
+// ── Hero ──────────────────────────────────────────────────────────
+function buildHero() {
+  document.getElementById('hero-name').textContent = data.name;
+
+  const avatarEl = document.getElementById('hero-avatar');
+  if (data.avatar) {
+    const img = document.createElement('img');
+    img.id = 'avatar'; img.src = data.avatar; img.alt = data.name;
+    img.onerror = () => img.replaceWith(h('div', null, '[ photo ]'));
+    avatarEl.append(img);
+  } else {
+    const ph = h('div', null);
+    ph.id = 'avatar-placeholder';
+    ph.textContent = 'Add avatar path in data object';
+    avatarEl.append(ph);
+  }
+
+  const bio = document.getElementById('bio');
+  bio.append(h('p', null, data.profile));
+
+  const actions = document.getElementById('hero-actions');
+  const cv = document.createElement('a');
+  cv.className = 'btn'; cv.href = '#'; cv.textContent = '⬡ Curriculum Vitae';
+  actions.append(cv);
+
+  // count all external links in the data
+  const allLinks = [
+    data.contact.linkedin, data.contact.github,
+    ...data.projects.map(p => p.link).filter(l => l && l !== '#')
+  ].filter(Boolean);
+  const badge = document.createElement('span');
+  badge.id = 'link-count';
+  badge.title = 'Number of external links';
+  badge.textContent = `${allLinks.length} links`;
+  actions.append(badge);
+
+  [
+    ['✉', `mailto:${data.contact.email1}`],
+    ['in', data.contact.linkedin],
+    ['gh', data.contact.github],
+    ['✆', `tel:${data.contact.phone}`]
+  ].forEach(([icon, href]) => {
+    const btn = document.createElement('a');
+    btn.className = 'icon-btn'; btn.href = href; btn.textContent = icon;
+    if (href.startsWith('http')) { btn.target = '_blank'; btn.rel = 'noopener'; }
+    actions.append(btn);
+  });
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────
+function buildTabs() {
+  const tabBar = document.getElementById('tabs');
+  const icons  = { Research: '⬡', Academic: '◈', Skills: '</>', Other: '↻' };
+  Object.keys(data.tabs).forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.dataset.tab = name;
+    btn.textContent = `${icons[name] || '·'} ${name.toUpperCase()}`;
+    btn.addEventListener('click', () => switchTab(name));
+    tabBar.append(btn);
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+buildHero();
+buildTabs();
+switchTab(Object.keys(data.tabs)[0]);
+
+// ── Neural Network Background ─────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('neural-bg');
+  const ctx    = canvas.getContext('2d');
+
+  const COLORS    = ['#5D3FD3', '#FF6F61', '#008080', '#00b3b3', '#a855f7', '#7c5cbf'];
+  const NODE_COUNT = 60;
+  const MAX_CONN   = 5;     // each node connects to its N nearest neighbours
+  const PULSE_SPEED = 0.011;
+
+  let W, H, nodes;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function hexToRgb(hex) {
+    return [
+      parseInt(hex.slice(1,3),16),
+      parseInt(hex.slice(3,5),16),
+      parseInt(hex.slice(5,7),16)
+    ].join(',');
+  }
+
+  function dist(a, b) {
+    const dx = a.x - b.x, dy = a.y - b.y;
+    return Math.sqrt(dx*dx + dy*dy);
+  }
+
+  function makeNode() {
+    return {
+      x:     Math.random() * W,
+      y:     Math.random() * H,
+      vx:    (Math.random() - 0.5) * 0.35,
+      vy:    (Math.random() - 0.5) * 0.35,
+      r:     Math.random() * 2 + 1.8,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      phase: Math.random() * Math.PI * 2
+    };
+  }
+
+  // Build edges: for every node, connect to its MAX_CONN nearest neighbours.
+  // This guarantees no isolated nodes — every node has at least MAX_CONN edges.
+  function buildEdges() {
+    const edges = new Set();
+    for (let i = 0; i < nodes.length; i++) {
+      // sort all other nodes by distance to i
+      const sorted = nodes
+        .map((n, j) => ({ j, d: dist(nodes[i], n) }))
+        .filter(x => x.j !== i)
+        .sort((a, b) => a.d - b.d);
+
+      for (let k = 0; k < MAX_CONN; k++) {
+        const j = sorted[k].j;
+        const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+        edges.add(key);
+      }
+    }
+    // convert to array of [i, j] pairs
+    return [...edges].map(k => k.split('-').map(Number));
+  }
+
+  function init() {
+    resize();
+    nodes = Array.from({ length: NODE_COUNT }, makeNode);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = 0.72; /* reduced by ~10% from full opacity */
+
+    // Move nodes
+    for (const n of nodes) {
+      n.x += n.vx;
+      n.y += n.vy;
+      n.phase += PULSE_SPEED;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    }
+
+    // Rebuild edges each frame (nodes move, neighbours change)
+    const edges = buildEdges();
+
+    // Draw edges — alpha based on distance, always visible
+    for (const [i, j] of edges) {
+      const a = nodes[i], b = nodes[j];
+      const d = dist(a, b);
+      // max possible dist on screen
+      const maxD = Math.sqrt(W*W + H*H);
+      // alpha: close = 0.5, far = 0.12 — always drawn, never invisible
+      const alpha = 0.12 + (1 - d / maxD) * 0.38;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = `rgba(${hexToRgb(a.color)},${alpha})`;
+      ctx.lineWidth = 0.85;
+      ctx.stroke();
+    }
+
+    // Draw nodes
+    for (const n of nodes) {
+      const pulse = 0.5 + 0.5 * Math.sin(n.phase);
+      const glow  = n.r * 3 + pulse * 3.5;
+      const rgb   = hexToRgb(n.color);
+
+      // soft glow halo
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, glow);
+      grad.addColorStop(0, `rgba(${rgb},${0.2 + pulse * 0.12})`);
+      grad.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, glow, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // core dot
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb},${0.6 + pulse * 0.25})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+
+</html>
